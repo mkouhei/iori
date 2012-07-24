@@ -1,0 +1,113 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH IORI 1 "July 11, 2012"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+iori \- deploy and config management tool for LXC
+.SH SYNOPSIS
+.B iori
+.RI [ options ] " sub-command"
+.RI [ sub-cmd-options ] " [infile]"
+.br
+.SH DESCRIPTION
+This manual page documents briefly the
+.B iori
+commands.
+.PP
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics,
+.\" respectively.
+\fBIori\fP Iori is a command line tool for deploying and config management tool of Linux Containers (LXC). When you use LXC, you ust use LXC userland command line tool as start with "lxc-*" generally. LXC is provided template config file and scripts. But this way if you want to manage from a remote contoller host is difficult to treat containers by bulk. So this tool controls LXC with libvirt API, and manages these config files with Git repository.
+.SH OPTIONS
+These programs follow the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+For a complete description, see the Info files.
+.TP
+.B \-h, \-\-help
+Show summary of options.
+.TP
+.B \-V, \-\-version
+Show program's version number.
+.TP
+.B \-d DIRPATH, \-\-dirpath DIRPATH
+Specify Git repository path.
+.SH SUB COMMANDS
+.TP
+.B newrepo
+Generate Git repository that path is $HOME/.iori, "master" branch is for mapping of LXC host nodes with IP address, user account using libvirt, etc. "template" branch is a template of each LXC host node branch.
+.TP
+.B addnode
+Register LXC host node to Git repository. Generate a branch is named from a node name. Then execute "listnode" subcommand, display registered nodes.
+.TP
+.B deploy
+Create a container of LXC. Firstly generate domain XML and define to libvirt. Then store that XML to Git repository. If without '--rootfs' option, a temporary(ephemeral) container will start.
+.TP
+.B start
+Start defined container.
+.TP
+.B destroy
+Destroy(Stop) a online container. Libvirt 0.9.12 does not support shutdown, reboot, reset for LXC.
+.TP
+.B delete
+Undefine a container from Libvirt and remove XML file from Git repository.
+.TP
+.B listnode
+Display registered LXC host nodes.
+.TP
+.B listcont
+Display deployed containeres.
+.TP
+.SH SUB COMMAND OPTIONS
+These programs follow the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+For a complete description, see the Info files.
+.TP
+.B \-n NODENAME, \-\-nodename NODENAME
+Specify a hostname or IP address of LXC host node.
+.TP
+.B \-c CONTNAME, \-\-contname CONTNAME
+Specify a container name.
+.TP
+.B \-\-vcpu num
+Specify VCPU numbers. (Default: 1)
+.TP
+.B \-\-mem num
+Specify memory size. unit is KB. (Default: 64000)
+.TP
+.B \-\-clock offset
+Specify clock offset. (Default: utf)
+.TP
+.B \-\-network network
+Specify libvirt network name. (Default: default)
+.TP
+.B \-\-rootfs
+When define a container, define rootfs path is /var/lib/lxc/$(containername).
+.TP
+.B \-\-debian
+When define a container, create rootfs image with debootstrap.
+.TP
+.SH SEE ALSO
+.br
+The programs are documented by
+.IR "README" ,
+available via the Info system.
+.SH AUTHOR
+iori was written by Kouhei Maeda <mkouhei@palmtb.net>.
+.PP
+This manual page was written by Kouhei Maeda <mkouhei@palmtb.net>.
+for the Debian project (and may be used by others).
