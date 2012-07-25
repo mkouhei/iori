@@ -1,5 +1,5 @@
-iori (0.1-1) unstable; urgency=low
+iori (0.1.1-1) unstable; urgency=low
 
   * Initial release (Closes: #nnnn)
 
- -- Kouhei Maeda <mkouhei@palmtb.net>  Tue, 24 Jul 2012 20:06:41 +0900
+ -- Kouhei Maeda <mkouhei@palmtb.net>  Wed, 25 Jul 2012 21:06:43 +0900
