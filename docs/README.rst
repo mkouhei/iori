@@ -94,12 +94,6 @@ If directory "/var/lib/lxc" is not existed, make it.::
   $ sudo mkdir /var/lib/lxc
 
 
-History
--------
-
-See docs/HISTORY.rst
-
-
 Quick start guide
 -----------------
 
@@ -140,9 +134,9 @@ You copy pre-commit hook scripts after git clone.::
 
   $ cp -f utils/pre-commit.txt .git/hooks/pre-commit
 
-Next install python 2.7 later and nosetests, libvirt, python-libvirt, GitPython, cdebootstrap. Below way is for Debian GNU/Linux Sid system.::
+Next install python 2.7 later and setuptools, nosetests, pep8, libvirt, python-libvirt, GitPython, cdebootstrap. Below way is for Debian GNU/Linux Sid system.::
 
-  $ sudo apt-get install python python-libvirt python-git python-nose
+  $ sudo apt-get install python python-libvirt python-git python-setuptools python-nose pep8
 
 Then checkout 'devel' branch for development, commit your changes. Before pull request, execute git rebase.
 
@@ -156,4 +150,3 @@ See also
 * `Appendix D. Random Bits - D.3. Installing Debian GNU/Linux from a Unix/Linux System <http://www.debian.org/releases/stable/amd64/apds03.html>`_
 
 See also these documents.
-
