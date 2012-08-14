@@ -3,6 +3,6 @@
 which nosetests || exit 1
 (
 cd $(git rev-parse --show-toplevel)
-nosetests -vd
-python setup.py check -r
+nosetests -vd || exit 1
+python setup.py check -r || exit 1
 )
