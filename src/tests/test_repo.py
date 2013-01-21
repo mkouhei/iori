@@ -1,18 +1,20 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 Tests of repo.py
 """
 import unittest
-from iori.repo import lxcRepo
+import sys
+import os.path
+sys.path.append(os.path.abspath('src'))
+import iori.repo
 
 
 class RepoTests(unittest.TestCase):
     def setUp(self):
         self.dirpath = '/tmp/iori_test'
         self.contname = 'testcont01'
-        self.r = lxcRepo(self.dirpath)
+        self.r = iori.repo.lxcRepo(self.dirpath)
 
     def test__init__(self):
         self.assertEquals('/tmp/iori_test/', self.r.dirpath)

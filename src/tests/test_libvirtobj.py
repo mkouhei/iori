@@ -1,16 +1,18 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 Tests of libvirtobj.py
 """
 import unittest
-from iori.libvirtobj import Controller
+import sys
+import os.path
+sys.path.append(os.path.abspath('src'))
+import iori.libvirtobj
 
 
 class ControllerTests(unittest.TestCase):
     def setUp(self):
-        self.l = Controller('localhost')
+        self.l = iori.libvirtobj.Controller('localhost')
 
     def test__init__(self):
         self.assertEqual(self.l.node, 'localhost')

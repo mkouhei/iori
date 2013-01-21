@@ -1,19 +1,21 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 Tests of control.py
 """
 import unittest
-from iori.control import Control
+import sys
+import os.path
+sys.path.append(os.path.abspath('src'))
+import iori.control
 
 
 class ControlTests(unittest.TestCase):
     def setUp(self):
         self.dirpath = '/tmp/iori_test'
         self.node = 'localhost'
-        self.ctl = Control(self.dirpath)
-        self.ctl2 = Control(self.dirpath, self.node)
+        self.ctl = iori.control.Control(self.dirpath)
+        self.ctl2 = iori.control.Control(self.dirpath, self.node)
 
     def test__init__(self):
         self.assertTrue(self.ctl.r)
