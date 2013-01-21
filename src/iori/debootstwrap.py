@@ -17,7 +17,7 @@
 """
 import sys
 import os.path
-import commands
+import subprocess
 
 
 # this module is wrapper of debootstrap, then is is named 'debootstwrap' :)
@@ -38,13 +38,16 @@ Install %s package.\n" % (cmd_exe, str(os.path.basename(cmd_exe))))
         arch = 'amd64'
         uri = 'http://cdn.debian.net/debian/'
         flavour = 'minimal'
-        include = 'ifupdown,locales,libui-dialog-perl,dialog,isc-dhcp-client,\
-netbase,net-tools,iproute,oepnssh-server,lv,git,etckeeper,sudo'
-        self.cmd = (cmd_exe + ' ' +
-                    '--flavour=' + flavour + ' ' +
-                    '--include=' + include + ' ' +
-                    dist + ' ' + rootfs + ' ' +
-                    '--arch=' + arch + ' ' + uri)
+        include = 'ifupdown,locales,libui-dialog-perl,dialog,isc-dhcp-client,'
+        'netbase,net-tools,iproute,oepnssh-server,lv,git,etckeeper,sudo'
+        # cdebootstrap command and arguments
+        self.cmd = [cmd_exe,
+                    '--flavour=%s' % flavour,
+                    '--include=%s' % include,
+                    dist,
+                    rootfs,
+                    '--arch=%s' % arch,
+                    uri]
 
         self.inittab = '''id:3:initdefault:
 si::sysinit:/etc/init.d/rcS
@@ -65,7 +68,7 @@ c4:12345:respawn:/sbin/getty 38400 tty4 linux
 
     def debootstrap(self):
         if not os.path.isdir(self.target):
-            commands.getstatusoutput('sudo ' + self.cmd)
+            subprocess.Popen(['sudo', self.cmd])
 
             # touch /etc/fstab
             f = open(self.rootfs + '/etc/fstab', 'w')
