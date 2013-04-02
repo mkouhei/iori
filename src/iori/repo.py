@@ -40,18 +40,17 @@ class lxcRepo(object):
     def check_dirrepo(self):
         # if not exist dir, then mkdir local repository
         if not os.path.isdir(self.dirpath):
-            sys.stderr.write("ERROR: %s such not directory\n" % self.dirpath)
+            print("ERROR: %s such not directory" % self.dirpath)
             exit(1)
 
         # git init when not git repository
         if not self.git_repo:
-            sys.stderr.write("ERROR: %s such not repository\n" % self.git_repo)
+            print("ERROR: %s such not repository" % self.git_repo)
             exit(1)
 
     def write_file(self, filename, msg=''):
-        f = open(filename, 'w')
-        f.write(msg)
-        f.close()
+        with open(filename, 'w') as f:
+            f.write(msg)
 
     # when git init once only
     def git_init(self):
@@ -75,18 +74,19 @@ class lxcRepo(object):
 
             # generate README
             readme = (self.dirpath + '/README')
-            msg = ("""This repository is generate automatically by iori.
-'master' branch is mapping of relation lxc host node and git ripository
-branches. Other branches exception of master and template are created by
-every lxc host from 'template' branch.
-                """)
+            msg = ('This repository is generate automatically by iori.\n'
+                   '"master" branch is mapping of relation '
+                   'lxc host node and git ripository\n'
+                   'branches. Other branches exception of '
+                   'master and template are created by\n'
+                   'every lxc host from "template" branch.\n')
             self.write_file(readme, msg)
             self.git_add_commit(readme)
             self.checkout_branch('master')
 
         else:
             d = self.dirpath.__str__()
-            sys.stderr.write('ERROR: "%s" is already existed\n' % d)
+            print('ERROR: "%s" is already existed' % d)
 
     def git_add_commit(self, filename):
         # git add
@@ -126,12 +126,12 @@ every lxc host from 'template' branch.
 
     def branches(self):
         self.check_dirrepo()
-        sys.stdout.write("no\tnode name\n")
-        sys.stdout.write("=" * 39 + "\n")
+        print("no\tnode name")
+        print("=" * 39)
 
         for i, branch in enumerate(self.git_repo.branches):
             if not ((str(branch) == 'master') or (str(branch) == 'template')):
-                sys.stdout.write("%d:\t%s\n" % (i, branch))
+                print("%d:\t%s" % (i, branch))
 
     def branch_files(self):
         self.check_dirrepo()

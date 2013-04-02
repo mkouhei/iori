@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os.path
-import sys
 import argparse
 from __init__ import __version__
 import control
@@ -237,19 +236,19 @@ def delete_container(args):
     ctl.delete_container(args)
 
 
-def error(e):
-    sys.stderr.write("ERROR: %s\n" % e)
+def print_error(error):
+    print("ERROR: %s" % error)
 
 
 def main():
     try:
         args = parse_options()
         args.func(args)
-    except RuntimeError as e:
-        error(e)
+    except RuntimeError as error:
+        print_error(error)
         return
-    except UnboundLocalError as e:
-        error(e)
+    except UnboundLocalError as error:
+        print_error(e)
         return
 
 

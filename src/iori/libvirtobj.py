@@ -43,8 +43,8 @@ class Controller(object):
                     self.user = 'root'
                 self.conn = l.open('lxc+ssh://' +
                                    self.user + '@' + self.node + '/')
-        except l.libvirtError as e:
-            sys.stderr.write("ERROR: %s\n" % e)
+        except l.libvirtError as error:
+            print("ERROR: %s" % error)
 
     # list network
     def netListOfNode(self):
@@ -66,9 +66,8 @@ class Controller(object):
         else:
             sys.stderr('ERROR')
             exit(1)
-        f = open(xmlfile, 'w')
-        f.write(xml)
-        f.close()
+        with open(xmlfile, 'w') as f:
+            f.write(xml)
         return os.path.basename(xmlfile)
 
     def createTemporaryContainer(self):

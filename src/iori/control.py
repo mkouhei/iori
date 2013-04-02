@@ -42,27 +42,26 @@ class Control(object):
         self.r.checkout_branch(nodename)
 
     def create_container(self, param):
-        if param.__dict__.get('nodename'):
-            nodename = param.__dict__.get('nodename')
+        if param.nodename:
+            nodename = param.nodename
             try:
                 self.r.checkout_branch(nodename)
             except git.exc.GitCommandError:
-                sys.stderr.write('ERROR: %s: No such node\n' %
-                                 nodename)
+                print('ERROR: %s: No such node' % nodename)
 
-        self.c.contname = param.__dict__.get('contname')
+        self.c.contname = param.contname
 
         if param.__dict__.get('vcpu'):
-            self.c.vcpu = param.__dict__.get('vcpu')
+            self.c.vcpu = param.vcpu
 
         if param.__dict__.get('memory'):
-            self.c.memory = param.__dict__.get('memory')
+            self.c.memory = param.memory
 
         if param.__dict__.get('clock'):
-            self.c.clock = param.__dict__.get('clock')
+            self.c.clock = param.clock
 
         if param.__dict__.get('network'):
-            self.c.network = param.__dict__.get('network')
+            self.c.network = param.network
 
         if param.__dict__.get('rootfs'):
             rootfs = '/var/lib/lxc/' + self.c.contname
@@ -75,7 +74,7 @@ class Control(object):
 
         if param.__dict__.get('rootfs'):
             # get domname
-            self.l.domname = param.__dict__.get('contname')
+            self.l.domname = param.contname
 
             # get defined domain object
             dom = self.l.getDomObj()
@@ -103,26 +102,22 @@ class Control(object):
 
     def list_containers(self, param):
         for node in self.r.branch_files():
-            if node.get('node') == param.__dict__.get('nodename'):
-                sys.stdout.write('nodename:\t%s\n' % node.get('node'))
+            if node.get('node') == param.nodename:
+                print('nodename:\t%s' % node.get('node'))
         print('%-20s%-10s%-10s' % ('container', 'state', 'defined'))
         print('-' * 40)
         for dom in self.l.list():
-            sys.stdout.write('%-20s%-10s%-10s\n' %
-                             (dom.get('domname'),
-                              dom.get('state'),
-                              dom.get('defined')))
+            print('%-20s%-10s%-10s' %
+                  (dom.get('domname'), dom.get('state'), dom.get('defined')))
 
     def start_container(self, param):
         if param.__dict__.get('nodename'):
             try:
-                self.r.checkout_branch(param.__dict__.get('nodename'))
+                self.r.checkout_branch(param.nodename)
             except git.exc.GitCommandError:
-                sys.stderr.write('ERROR: %s: No such node\n' %
-                                 param.__dict__.get('nodename'))
+                print('ERROR: %s: No such node' % param.nodename)
 
-        contname = param.__dict__.get('contname')
-        self.l.domname = contname
+        self.l.domname = param.contname
 
         # get defined domain object
         dom = self.l.getDomObj()
@@ -134,13 +129,12 @@ class Control(object):
     def destroy_container(self, param):
         if param.__dict__.get('nodename'):
             try:
-                self.r.checkout_branch(param.__dict__.get('nodename'))
+                self.r.checkout_branch(param.nodename)
             except git.exc.GitCommandError:
                 sys.stderr.write('ERROR: %s: No such node\n' %
-                                 param.__dict__.get('nodename'))
+                                 param.nodename)
 
-        contname = param.__dict__.get('contname')
-        self.l.domname = contname
+        self.l.domname = param.contname
 
         # get defined domain object
         dom = self.l.getDomObj()
@@ -153,13 +147,12 @@ class Control(object):
     def delete_container(self, param):
         if param.__dict__.get('nodename'):
             try:
-                self.r.checkout_branch(param.__dict__.get('nodename'))
+                self.r.checkout_branch(param.nodename)
             except git.exc.GitCommandError:
                 sys.stderr.write('ERROR: %s: No such node\n' %
-                                 param.__dict__.get('nodename'))
+                                 param.nodename)
 
-        contname = param.__dict__.get('contname')
-        self.l.domname = contname
+        self.l.domname = param.contname
 
         # get defined domain object
         dom = self.l.getDomObj()
@@ -169,4 +162,4 @@ class Control(object):
             self.l.undefineContainer(dom)
 
         # git rm and commit XML file
-        self.r.git_rm_commit(contname)
+        self.r.git_rm_commit(param.contname)
