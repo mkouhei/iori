@@ -54,13 +54,13 @@ setup(name='iori',
       install_requires=requires,
       extras_require=dict(
         test=[
-            'nose',
+            'pytest',
             'pep8',
             'unittest',
             ],
         ),
-      test_suite='nose.collector',
-      tests_require=['nose','pep8','unittest'],
+      test_suite='iori_tests',
+      tests_require=['pytest','pep8'],
       entry_points="""
         [console_scripts]
         iori = iori.command:main
