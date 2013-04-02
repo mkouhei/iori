@@ -91,7 +91,7 @@ def prs_create_container(obj):
 # Start container
 def prs_start_container(obj):
     prs_start_container = obj.add_parser('start',
-                                          help='start lxc container')
+                                         help='start lxc container')
     setoption(prs_start_container, 'nodename')
     setoption(prs_start_container, 'contname')
     prs_start_container.set_defaults(func=start_container)
@@ -110,7 +110,7 @@ def prs_shutdown_container(obj):
 # Destroy container
 def prs_destroy_container(obj):
     prs_destroy_container = obj.add_parser('destroy',
-                                          help='destroy lxc container')
+                                           help='destroy lxc container')
     setoption(prs_destroy_container, 'nodename')
     setoption(prs_destroy_container, 'contname')
     prs_destroy_container.set_defaults(func=destroy_container)
@@ -135,7 +135,7 @@ def prs_list_nodes(obj):
 # Listing defined containers
 def prs_list_containers(obj):
     prs_list_containers = obj.add_parser('listcont',
-                                    help='listing containers')
+                                         help='listing containers')
     setoption(prs_list_containers, 'nodename')
     prs_list_containers.set_defaults(func=list_containers)
 
