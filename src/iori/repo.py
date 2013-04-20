@@ -99,9 +99,9 @@ class lxcRepo(object):
             action = 'update '
 
         if self.contname:
-            msg = self.contname + ': ' + action + filename
+            msg = self.contname + ': ' + action + os.path.basename(filename)
         else:
-            msg = action + filename
+            msg = action + os.path.basename(filename)
 
         # git commit
         self.git_cmd.commit(m=msg)
