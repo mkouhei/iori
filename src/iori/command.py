@@ -175,13 +175,13 @@ def repopath(args):
     if args.__dict__.get('dirpath'):
         dirpath = args.__dict__.get('dirpath')
     else:
-        dirpath = os.path.abspath(os.environ['HOME'] + '/.iori') + '/'
+        dirpath = os.path.abspath(os.path.join(os.environ['HOME'], '.iori'))
     return dirpath
 
 
 def nodename(args):
-    if args.__dict__.get('nodename'):
-        nodename = args.__dict__.get('nodename')
+    if args.nodename:
+        nodename = args.nodename
     else:
         nodename = 'localhost'
     return nodename
@@ -193,8 +193,8 @@ def make_repo(args):
 
 
 def add_node(args):
-    if args.__dict__.get('nodename'):
-        nodename = args.__dict__.get('nodename')
+    if args.nodename:
+        nodename = args.nodename
     ctl = control.Control(repopath(args))
     ctl.add_node(nodename)
 
@@ -236,20 +236,12 @@ def delete_container(args):
     ctl.delete_container(args)
 
 
-def print_error(error):
-    print("ERROR: %s" % error)
-
-
 def main():
     try:
         args = parse_options()
         args.func(args)
-    except RuntimeError as error:
-        print_error(error)
-        return
-    except UnboundLocalError as error:
-        print_error(e)
-        return
+    except (RuntimeError, UnboundLocalError) as error:
+        utils.logging(3, error)
 
 
 if __name__ == '__main__':

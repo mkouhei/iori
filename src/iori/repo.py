@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Copyright (C) 2012 Kouhei Maeda <mkouhei@palmtb.net>
+    Copyright (C) 2012, 2013 Kouhei Maeda <mkouhei@palmtb.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@ import git
 class lxcRepo(object):
 
     def __init__(self, dirpath):
-        self.dirpath = os.path.abspath(dirpath) + '/'
+        self.dirpath = os.path.abspath(dirpath)
 
         # instantication
         self.git_cmd = git.cmd.Git(self.dirpath)
-        if git.repo.fun.is_git_dir(self.dirpath + '/.git'):
+        if git.repo.fun.is_git_dir(os.path.join(self.dirpath, '.git')):
             self.git_repo = git.repo.Repo(self.dirpath)
         else:
             self.git_repo = None
@@ -40,8 +40,7 @@ class lxcRepo(object):
     def check_dirrepo(self):
         # if not exist dir, then mkdir local repository
         if not os.path.isdir(self.dirpath):
-            print("ERROR: %s such not directory" % self.dirpath)
-            exit(1)
+            utils.error("%s such not directory" % self.dirpath)
 
         # git init when not git repository
         if not self.git_repo:
@@ -64,7 +63,7 @@ class lxcRepo(object):
             self.git_repo = git.repo.Repo(self.dirpath)
 
             # first commit to master branch
-            gitignore = (self.dirpath + '/.gitignore')
+            gitignore = os.path.join(self.dirpath, '.gitignore')
             self.write_file(gitignore)
             self.git_add_commit(gitignore)
 

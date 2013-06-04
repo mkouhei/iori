@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Copyright (C) 2012 Kouhei Maeda <mkouhei@palmtb.net>
+    Copyright (C) 2012, 2013 Kouhei Maeda <mkouhei@palmtb.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,8 +37,6 @@ class Controller(object):
                 self.conn = l.open('lxc:///')
             else:
                 # enable to specify user account is belong to libvirt group
-                print(self.conn)
-                exit(1)
                 if not self.user:
                     self.user = 'root'
                 self.conn = l.open('lxc+ssh://' +
@@ -47,13 +45,10 @@ class Controller(object):
             print("ERROR: %s" % error)
 
     # list network
-    def netListOfNode(self):
-        # defined
-        print(self.conn.listDefinedNetworks())
-        # active
-        print(self.conn.listNetworks())
-        # net obj
-        print(self.conn.networkLookupByName('default'))
+    def net_list_of_node(self):
+        return dict(defined=self.conn.listDefinedNetworks(),
+                    active=self.conn.listNetworks(),
+                    network=self.conn.networkLookupByName('default').name())
 
     # get defined xml description
     def getContainerDefinedXML(self, dom):

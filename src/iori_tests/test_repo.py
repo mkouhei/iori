@@ -8,18 +8,16 @@ import sys
 import os.path
 sys.path.append(os.path.abspath('src'))
 import iori.repo
+import iori_tests.test_vars as v
 
 
 class RepoTests(unittest.TestCase):
     def setUp(self):
-        self.dirpath = '/tmp/iori_test'
-        self.contname = 'testcont01'
-        self.r = iori.repo.lxcRepo(self.dirpath)
+        self.r = iori.repo.lxcRepo(v.dirpath)
 
     def test__init__(self):
-        self.assertEquals('/tmp/iori_test/', self.r.dirpath)
+        self.assertEquals(v.dirpath, self.r.dirpath)
         self.assertIsNone(self.r.git_repo)
-        self.assertFalse(self.r.contname)
 
     '''
     def test_check_dirrepo(self):
