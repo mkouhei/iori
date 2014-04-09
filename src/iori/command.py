@@ -246,10 +246,10 @@ def main():
         args.func(args)
     except RuntimeError as error:
         print_error(error)
-        return
+        sys.exit(1)
     except UnboundLocalError as error:
         print_error(e)
-        return
+        sys.exit(1)
 
 
 if __name__ == '__main__':

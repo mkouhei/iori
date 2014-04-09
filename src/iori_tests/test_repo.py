@@ -14,9 +14,9 @@ class RepoTests(unittest.TestCase):
     def setUp(self):
         self.dirpath = '/tmp/iori_test'
         self.contname = 'testcont01'
-        self.r = iori.repo.lxcRepo(self.dirpath)
+        self.r = iori.repo.Repo(self.dirpath)
 
     def test__init__(self):
-        self.assertEquals('/tmp/iori_test/', self.r.dirpath)
+        self.assertEquals('/tmp/iori_test', self.r.dirpath)
         self.assertIsNone(self.r.git_repo)
         self.assertFalse(self.r.contname)

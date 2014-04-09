@@ -27,7 +27,7 @@ import debootstwrap
 class Control(object):
 
     def __init__(self, dirpath, node=''):
-        self.r = repo.lxcRepo(dirpath)
+        self.r = repo.Repo(dirpath)
         if node:
             self.l = libvirtobj.Controller(node)
         self.c = config.Config()
@@ -48,6 +48,7 @@ class Control(object):
                 self.r.checkout_branch(nodename)
             except git.exc.GitCommandError:
                 print('ERROR: %s: No such node' % nodename)
+                sys.exit(1)
 
         self.c.contname = param.contname
 
@@ -64,9 +65,9 @@ class Control(object):
             self.c.network = param.network
 
         if param.__dict__.get('rootfs'):
-            rootfs = '/var/lib/lxc/' + self.c.contname
+            rootfs_path = os.path.join('/var/lib/lxc', self.c.contname)
             if param.__dict__.get('debootstrap'):
-                d = debootstwrap.Debootstrap(nodename, rootfs)
+                d = debootstwrap.Debootstrap(nodename, rootfs_path)
                 d.debootstrap()
 
         # generate XML strings
@@ -110,12 +111,14 @@ class Control(object):
             print('%-20s%-10s%-10s' %
                   (dom.get('domname'), dom.get('state'), dom.get('defined')))
 
+
     def start_container(self, param):
         if param.__dict__.get('nodename'):
             try:
                 self.r.checkout_branch(param.nodename)
             except git.exc.GitCommandError:
                 print('ERROR: %s: No such node' % param.nodename)
+                sys.exit(1)
 
         self.l.domname = param.contname
 
@@ -131,8 +134,8 @@ class Control(object):
             try:
                 self.r.checkout_branch(param.nodename)
             except git.exc.GitCommandError:
-                sys.stderr.write('ERROR: %s: No such node\n' %
-                                 param.nodename)
+                print('ERROR: %s: No such node' % param.nodename)
+                sys.exit(1)
 
         self.l.domname = param.contname
 

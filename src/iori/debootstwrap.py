@@ -26,7 +26,7 @@ class Debootstrap(object):
         cmd_exe = '/usr/bin/cdebootstrap'
         if not os.path.isfile(cmd_exe):
             print('ERROR: %s is not existed. '
-                  'Install %s package.\n'
+                  'Install %s package.'
                   % (cmd_exe, str(os.path.basename(cmd_exe))))
 
         if nodename in ('127.0.0.1', 'localhost',

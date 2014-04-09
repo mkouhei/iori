@@ -38,13 +38,14 @@ class Controller(object):
             else:
                 # enable to specify user account is belong to libvirt group
                 print(self.conn)
-                exit(1)
+                sys.exit(1)
                 if not self.user:
                     self.user = 'root'
                 self.conn = l.open('lxc+ssh://' +
                                    self.user + '@' + self.node + '/')
         except l.libvirtError as error:
             print("ERROR: %s" % error)
+            sys.exit(1)
 
     # list network
     def listNetOfNode(self):
@@ -77,10 +78,10 @@ class Controller(object):
     # write xml file
     def saveDefinedXML(self, dirpath, xml):
         if os.path.isdir(dirpath):
-            xmlfile = dirpath + self.domname + '.xml'
+            xmlfile = os.path.join(dirpath, self.domname + '.xml')
         else:
             sys.stderr('ERROR')
-            exit(1)
+            sys.exit(1)
         with open(xmlfile, 'w') as f:
             f.write(xml)
         return os.path.basename(xmlfile)
