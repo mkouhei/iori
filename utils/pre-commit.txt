@@ -1,8 +1,8 @@
 #!/bin/sh
 
-which py.test || exit 1
-(
 cd $(git rev-parse --show-toplevel)
-py.test -v src || exit 1
+python setup.py test || exit 1
 python setup.py check -r || exit 1
-)
+pychecker -X -s -0 --only src/*.py
+pychecker -X -s -0 --only src/iori/*.py
+pychecker -X -s -0 --only src/tests/*.py
