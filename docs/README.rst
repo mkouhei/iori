@@ -136,7 +136,7 @@ You copy pre-commit hook scripts after git clone.::
 
 Next install python 2.7 later and setuptools, nosetests, pep8, libvirt, python-libvirt, GitPython, cdebootstrap. Below way is for Debian GNU/Linux Sid system.::
 
-  $ sudo apt-get install python python-libvirt python-git python-setuptools python-nose pep8
+  $ sudo apt-get install python python-libvirt python-git python-setuptools pep8 libvirt-dev python-tox python-virtualenv
 
 Then checkout 'devel' branch for development, commit your changes. Before pull request, execute git rebase.
 
