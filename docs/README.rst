@@ -134,7 +134,7 @@ You copy pre-commit hook scripts after git clone.::
 
   $ cp -f utils/pre-commit.txt .git/hooks/pre-commit
 
-Next install python 2.7 later and setuptools, nosetests, pep8, libvirt, python-libvirt, GitPython, cdebootstrap. Below way is for Debian GNU/Linux Sid system.::
+Next install python 2.7 later and setuptools, pep8, libvirt, libvirt-dev, python-libvirt, GitPython, cdebootstrap, python-tox, python-virtualenv. Below way is for Debian GNU/Linux Sid system.::
 
   $ sudo apt-get install python python-libvirt python-git python-setuptools pep8 libvirt-dev python-tox python-virtualenv
 
