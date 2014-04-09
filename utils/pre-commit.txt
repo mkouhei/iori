@@ -5,4 +5,4 @@ python setup.py test || exit 1
 python setup.py check -r || exit 1
 pychecker -X -s -0 --only src/*.py
 pychecker -X -s -0 --only src/iori/*.py
-pychecker -X -s -0 --only src/tests/*.py
+pychecker -X -s -0 --only src/iori_tests/*.py
