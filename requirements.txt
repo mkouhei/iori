@@ -1,7 +1,5 @@
 pep8
 pytest
-lxml
-defusedxml
 GitPython
 libvirt-python
 

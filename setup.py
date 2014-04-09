@@ -51,8 +51,6 @@ long_description = (open(os.path.join("docs", "README.rst")).read() +
                     open(os.path.join("docs", "TODO.rst")).read())
 
 requires = ['setuptools',
-            'lxml',
-            'defusedxml',
             'GitPython',
             'libvirt-python']
 
