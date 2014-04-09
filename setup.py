@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Copyright (C) 2012 Kouhei Maeda <mkouhei@palmtb.net>
+    Copyright (C) 2012-2014 Kouhei Maeda <mkouhei@palmtb.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,28 +15,47 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import os
 import sys
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+import multiprocessing
 
 sys.path.insert(0, 'src')
 import iori
 
+
+class Tox(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import tox
+        errno = tox.cmdline(self.test_args)
+        sys.exit(errno)
+
+
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "License :: OSI Approved :: "
+    "GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python",
     "Topic :: System :: Systems Administration",
 ]
 
-long_description = \
-        open(os.path.join("docs","README.rst")).read() + \
-        open(os.path.join("docs","HISTORY.rst")).read() + \
-        open(os.path.join("docs","TODO.rst")).read()
+long_description = (open(os.path.join("docs", "README.rst")).read() +
+                    open(os.path.join("docs", "HISTORY.rst")).read() +
+                    open(os.path.join("docs", "TODO.rst")).read())
 
-requires = ['setuptools', 'GitPython']
+requires = ['setuptools',
+            'lxml',
+            'defusedxml',
+            'GitPython',
+            'libvirt-python']
+
 
 setup(name='iori',
       version=iori.__version__,
@@ -49,19 +68,11 @@ setup(name='iori',
       classifiers=classifiers,
       packages=find_packages('src'),
       package_dir={'': 'src'},
-      data_files = [],
+      data_files=[],
       install_requires=requires,
-      extras_require=dict(
-        test=[
-            'pytest',
-            'pep8',
-            'unittest',
-            ],
-        ),
-      test_suite='iori_tests',
-      tests_require=['pytest','pep8'],
+      tests_require=['tox'],
+      cmdclass={'test': Tox},
       entry_points="""
         [console_scripts]
         iori = iori.command:main
-""",
-)
+      """,)

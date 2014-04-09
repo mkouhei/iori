@@ -47,13 +47,28 @@ class Controller(object):
             print("ERROR: %s" % error)
 
     # list network
-    def netListOfNode(self):
+    def listNetOfNode(self):
         # defined
-        print(self.conn.listDefinedNetworks())
-        # active
-        print(self.conn.listNetworks())
-        # net obj
-        print(self.conn.networkLookupByName('default'))
+        if self.conn.numOfDefinedNetworks():
+            print(self.conn.listDefinedNetworks())
+        else:
+            print('None')
+        # active network list
+        print(self.conn.numOfNetworks())
+
+    # get network obj
+    def getNet(self, nwname):
+        nwobj = self.conn.networkLookupByName(nwname)
+        print(nwobj)
+
+        nw = l.virNetwork(self.conn, nwobj)
+        print(nw.name())
+
+    def startNet(self, nwobj):
+        if nwobj:
+            print(self.conn.listNetworks())
+        else:
+            pass
 
     # get defined xml description
     def getContainerDefinedXML(self, dom):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Copyright (C) 2012 Kouhei Maeda <mkouhei@palmtb.net>
+    Copyright (C) 2012-2014 Kouhei Maeda <mkouhei@palmtb.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class lxcRepo(object):
             self.git_repo = git.repo.Repo(self.dirpath)
         else:
             self.git_repo = None
-        #self.git_index = git.IndexFile(self.git_repo)
+        # self.git_index = git.IndexFile(self.git_repo)
 
         # container name
         self.contname = ''
